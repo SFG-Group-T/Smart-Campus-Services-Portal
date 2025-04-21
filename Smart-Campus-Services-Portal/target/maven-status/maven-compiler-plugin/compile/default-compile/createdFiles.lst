@@ -1,0 +1,16 @@
+com\groupT\Smart\Campus\Services\Portal\controller\AdminController.class
+com\groupT\Smart\Campus\Services\Portal\controller\LecturerController.class
+com\groupT\Smart\Campus\Services\Portal\service\Implementation\UserDetailsServiceImpl.class
+com\groupT\Smart\Campus\Services\Portal\controller\StudentController.class
+com\groupT\Smart\Campus\Services\Portal\entity\User$UserBuilder.class
+com\groupT\Smart\Campus\Services\Portal\repository\UserRepository.class
+com\groupT\Smart\Campus\Services\Portal\util\Role.class
+com\groupT\Smart\Campus\Services\Portal\controller\AuthController.class
+com\groupT\Smart\Campus\Services\Portal\entity\User.class
+com\groupT\Smart\Campus\Services\Portal\service\Interface\JwtService.class
+com\groupT\Smart\Campus\Services\Portal\SmartCampusServicesPortalApplication.class
+com\groupT\Smart\Campus\Services\Portal\dtos\response\AuthResponse.class
+com\groupT\Smart\Campus\Services\Portal\service\Implementation\JwtServiceImpl.class
+com\groupT\Smart\Campus\Services\Portal\exception\UsernameNotFoundException.class
+com\groupT\Smart\Campus\Services\Portal\dtos\request\AuthRequest.class
+com\groupT\Smart\Campus\Services\Portal\config\SecurityConfig.class
