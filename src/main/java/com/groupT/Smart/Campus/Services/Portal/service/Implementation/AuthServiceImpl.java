@@ -37,7 +37,12 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.STUDENT); // default role
+        
+        // Only set default role if one isn't provided
+        if (user.getRole() == null) {
+            user.setRole(Role.STUDENT); // default role
+        }
+        
         userRepository.save(user);
 
         return "User registered successfully";

@@ -1,5 +1,6 @@
 package com.groupT.Smart.Campus.Services.Portal.entity;
 
+import com.groupT.Smart.Campus.Services.Portal.util.BookingStatus;
 import com.groupT.Smart.Campus.Services.Portal.util.ServiceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,9 @@ public class Booking {
 
         @Enumerated(EnumType.STRING)
         private ServiceType serviceType; // e.g., "Room", "Appointment"
+
+        @Enumerated(EnumType.STRING)
+        private BookingStatus status = BookingStatus.PENDING; // Default status is PENDING
 
         private String location;
         private String studentUsername; // To link to the logged-in student
