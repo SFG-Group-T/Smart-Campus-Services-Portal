@@ -13,6 +13,10 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking,Long> {
 
     List<Booking> findByStudentUsername(String username);
+
+//    List<Booking> findByLecturer_Email(String email);
+
+    List<Booking> findByLecturer_Id(Long lecturerId);
     
     List<Booking> findByStatus(BookingStatus status);
     

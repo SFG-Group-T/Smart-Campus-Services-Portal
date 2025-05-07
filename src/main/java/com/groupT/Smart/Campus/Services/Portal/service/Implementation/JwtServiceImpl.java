@@ -1,7 +1,9 @@
 package com.groupT.Smart.Campus.Services.Portal.service.Implementation;
 
+import com.groupT.Smart.Campus.Services.Portal.exception.ExpiredTokenException;
 import com.groupT.Smart.Campus.Services.Portal.service.Interface.JwtService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -35,7 +37,7 @@ public class JwtServiceImpl implements JwtService {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 2))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -70,12 +72,18 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public Claims extractAllClaims(String token) {
 
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+
+        // Optionally rethrow or handle it (e.g., return null or throw a custom exception)
+        throw new ExpiredTokenException("JWT token is expired: " + e.getMessage());
     }
+}
 
     @Override
     public Boolean isTokenExpired(String token) {

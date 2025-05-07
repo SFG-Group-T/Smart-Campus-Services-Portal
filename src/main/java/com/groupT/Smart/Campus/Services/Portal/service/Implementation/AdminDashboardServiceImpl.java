@@ -156,7 +156,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         List<Booking> bookings = bookingRepository.findAll();
         bookings.forEach(booking -> {
             if (booking.getStartTime() != null) {
-                String dayName = booking.getStartTime().getDayOfWeek()
+                String dayName = booking.getDate().getDayOfWeek()
                         .getDisplayName(TextStyle.FULL, Locale.US);
                 bookingsByDay.put(dayName, bookingsByDay.getOrDefault(dayName, 0) + 1);
             }

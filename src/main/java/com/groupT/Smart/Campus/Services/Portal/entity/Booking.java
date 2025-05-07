@@ -1,13 +1,18 @@
 package com.groupT.Smart.Campus.Services.Portal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.groupT.Smart.Campus.Services.Portal.util.BookingStatus;
 import com.groupT.Smart.Campus.Services.Portal.util.ServiceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -28,7 +33,22 @@ public class Booking {
         private String location;
         private String studentUsername; // To link to the logged-in student
         private String lecturerName;
-        private LocalDateTime startTime;
-        private LocalDateTime endTime;
 
+        @DateTimeFormat(pattern = "HH:mm")
+        private LocalTime startTime;
+        @DateTimeFormat(pattern = "HH:mm")
+        private LocalTime endTime;
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate date = LocalDate.now();
+
+        @ManyToOne
+        @JoinColumn(name = "student_id")
+        @JsonIgnore
+        private Student student;
+
+        @ManyToOne
+        @JoinColumn(name = "lecturer_id")
+        @JsonIgnore
+        private Lecturer lecturer;
 }

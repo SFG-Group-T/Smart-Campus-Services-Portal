@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -63,24 +64,24 @@ public class AdminDashboardServiceTest {
         booking1.setLocation("Room A");
         booking1.setServiceType(ServiceType.ROOM);
         booking1.setStatus(BookingStatus.CONFIRMED);
-        booking1.setStartTime(now.plusDays(1));
-        booking1.setEndTime(now.plusDays(1).plusHours(2));
+        booking1.setStartTime(LocalTime.from(now.plusDays(1)));
+        booking1.setEndTime(LocalTime.from(now.plusDays(1).plusHours(2)));
 
         booking2 = new Booking();
         booking2.setId(2L);
         booking2.setLocation("Room B");
         booking2.setServiceType(ServiceType.ROOM);
         booking2.setStatus(BookingStatus.PENDING);
-        booking2.setStartTime(now.plusDays(2));
-        booking2.setEndTime(now.plusDays(2).plusHours(1));
+        booking2.setStartTime(LocalTime.from(now.plusDays(2)));
+        booking2.setEndTime(LocalTime.from(now.plusDays(2).plusHours(1)));
 
         booking3 = new Booking();
         booking3.setId(3L);
         booking3.setLocation("Room A");
         booking3.setServiceType(ServiceType.APPOINTMENT);
         booking3.setStatus(BookingStatus.COMPLETED);
-        booking3.setStartTime(now.minusDays(1));
-        booking3.setEndTime(now.minusDays(1).plusHours(1));
+        booking3.setStartTime(LocalTime.from(now.minusDays(1)));
+        booking3.setEndTime(LocalTime.from(now.minusDays(1).plusHours(1)));
 
         // Create test maintenance requests
         request1 = MaintenanceRequest.builder()

@@ -9,4 +9,6 @@ public interface BookingService {
     public List<Booking> getBookingsForStudent(String username);
     public void saveBooking(Booking booking);
     public void deleteBooking(Long id);
+
+    public void updateBooking(Long id, Booking booking);
 }

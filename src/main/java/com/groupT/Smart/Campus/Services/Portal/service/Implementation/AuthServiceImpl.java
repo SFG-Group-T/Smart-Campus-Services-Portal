@@ -2,8 +2,12 @@ package com.groupT.Smart.Campus.Services.Portal.service.Implementation;
 
 import com.groupT.Smart.Campus.Services.Portal.dtos.request.AuthRequest;
 import com.groupT.Smart.Campus.Services.Portal.dtos.response.AuthResponse;
+import com.groupT.Smart.Campus.Services.Portal.entity.Lecturer;
+import com.groupT.Smart.Campus.Services.Portal.entity.Student;
 import com.groupT.Smart.Campus.Services.Portal.entity.User;
 import com.groupT.Smart.Campus.Services.Portal.exception.InvalidLoginException;
+import com.groupT.Smart.Campus.Services.Portal.repository.LecturerRepository;
+import com.groupT.Smart.Campus.Services.Portal.repository.StudentRepository;
 import com.groupT.Smart.Campus.Services.Portal.repository.UserRepository;
 import com.groupT.Smart.Campus.Services.Portal.service.Interface.AuthService;
 import com.groupT.Smart.Campus.Services.Portal.service.Interface.JwtService;
@@ -23,6 +27,8 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
+    private final LecturerRepository lecturerRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -32,20 +38,31 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public String registerUser(User user) {
 
-        if(userRepository.existsByUsername(user.getUsername())){
-            return "Registration failed: User already exists";
+        if (user instanceof Student student) {
+
+            if (studentRepository.existsByEmail(student.getEmail())) {
+                throw new RuntimeException("Student with this email already exists");
+            }
+            student.setRole(Role.STUDENT);
+            student.setPassword(passwordEncoder.encode(student.getPassword()));
+            studentRepository.save(student);
+
+            return "Student registered successfully";
+
+        } else if (user instanceof Lecturer lecturer) {
+
+            if (lecturerRepository.existsByEmail(lecturer.getEmail())) {
+                throw new RuntimeException("Lecturer with this email already exists");
+            }
+            lecturer.setRole(Role.LECTURER);
+            lecturer.setPassword(passwordEncoder.encode(lecturer.getPassword()));
+            lecturerRepository.save(lecturer);
+
+            return "Lecturer registered successfully";
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        
-        // Only set default role if one isn't provided
-        if (user.getRole() == null) {
-            user.setRole(Role.STUDENT); // default role
-        }
-        
-        userRepository.save(user);
+        throw new IllegalArgumentException("Unsupported user type");
 
-        return "User registered successfully";
     }
 
     @Override
