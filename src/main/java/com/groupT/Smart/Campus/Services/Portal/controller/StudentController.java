@@ -37,7 +37,7 @@ public class StudentController {
         return new ResponseObject("Booking Deleted");
     }
 
-    @PutMapping("/update/bookings/{id}")
+    @PutMapping("/booking/{id}")
     public ResponseObject updateBooking(@PathVariable Long id, @RequestBody Booking booking) {
         bookingService.updateBooking(id, booking);
         return new ResponseObject ("Booking updated successfully");
